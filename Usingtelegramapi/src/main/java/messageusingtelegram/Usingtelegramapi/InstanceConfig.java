@@ -157,67 +157,34 @@ import org.springframework.stereotype.Component;
 public class InstanceConfig {
 
 
-
-    
-    @Value("${instance.id}")
-    public static  String INSTANCE_ID ;
+	@Value("${instance.id}")
+    public String INSTANCE_ID ;
     
     @Value("${client.id}")
-    public static  String CLIENT_ID;
+    public String CLIENT_ID;
     
     @Value("${client.secret}")
-    public static String CLIENT_SECRET;
-    @Value("$")
-    private static final String TG_GATEWAY_URL ;
+    public String CLIENT_SECRET;
+    
+    @Value("${TG.GATEWAY.URL}")
+    private String TG_GATEWAY_URL ;
 
 
-  public static void main(String[] args) throws Exception {
-    String number = "12025550108";  //  TODO: Specify the recipient's number here. NOT the gateway number
-    String message = "Howdy, isn't this exciting?";
+    
+    public String getINSTANCE_ID() {
+		return INSTANCE_ID;
+	}
+	public String getCLIENT_ID() {
+		return CLIENT_ID;
+	}
+	public String getCLIENT_SECRET() {
+		return CLIENT_SECRET;
+	}
+	public String getTG_GATEWAY_URL() {
+		return TG_GATEWAY_URL;
+	}
+	
+ 
 
-    TelegramSender.sendMessage(number, message);
-  }
-
-  /**
-   * Sends out a WhatsApp message via WhatsMate WA Gateway.
-   */
-  public static void sendMessage(String number, String message) throws Exception {
-    // TODO: Should have used a 3rd party library to make a JSON string from an object
-    String jsonPayload = new StringBuilder()
-      .append("{")
-      .append("\"number\":\"")
-      .append(number)
-      .append("\",")
-      .append("\"message\":\"")
-      .append(message)
-      .append("\"")
-      .append("}")
-      .toString();
-
-    URL url = new URL(TG_GATEWAY_URL);
-    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-    conn.setDoOutput(true);
-    conn.setRequestMethod("POST");
-    conn.setRequestProperty("X-WM-CLIENT-ID", CLIENT_ID);
-    conn.setRequestProperty("X-WM-CLIENT-SECRET", CLIENT_SECRET);
-    conn.setRequestProperty("Content-Type", "application/json");
-
-    OutputStream os = conn.getOutputStream();
-    os.write(jsonPayload.getBytes());
-    os.flush();
-    os.close();
-
-    int statusCode = conn.getResponseCode();
-    System.out.println("Response from WA Gateway: \n");
-    System.out.println("Status Code: " + statusCode);
-    BufferedReader br = new BufferedReader(new InputStreamReader(
-        (statusCode == 200) ? conn.getInputStream() : conn.getErrorStream()
-      ));
-    String output;
-    while ((output = br.readLine()) != null) {
-        System.out.println(output);
-    }
-    conn.disconnect();
-  }
 
 }
