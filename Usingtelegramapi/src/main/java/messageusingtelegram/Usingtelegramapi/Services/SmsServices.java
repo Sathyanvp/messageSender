@@ -1,18 +1,23 @@
 package messageusingtelegram.Usingtelegramapi.Services;
+
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+
+import messageusingtelegram.Usingtelegramapi.Configuration.ConfigSMS;
+
 public class SmsServices {
 
-
-	public void sendMessage(String toPhoneNumber, String fromPhoneNumber, String message) {
+	private ConfigSMS configsms;
+	
+	public void sendMessage(String toPhoneNumber, String fromPhoneNumber, String text) {
 		// TODO Auto-generated method stub
-		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		Twilio.init(configsms.getACCOUNT_SID(), configsms.getAUTH_TOKEN());
 		 try {
 	            Message message = Message.creator(
 	                    new PhoneNumber(toPhoneNumber),
 	                    new PhoneNumber(fromPhoneNumber),
-	                    messageBody)
+	                   text)
 	                    .create();
 
 	            System.out.println("SMS sent successfully! SID: " + message.getSid());

@@ -6,20 +6,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import messageusingtelegram.Usingtelegramapi.InstanceConfig;
+import messageusingtelegram.Usingtelegramapi.Configuration.InstanceConfigTelegram;
 
 @Service
 public class TelegramService {
 
-    private InstanceConfig instanceconfig;
+    private InstanceConfigTelegram instanceconfigtelegram;
 
     @Autowired
-    public TelegramService(InstanceConfig instanceconfig) {
-        this.instanceconfig = instanceconfig;
+    public TelegramService(InstanceConfigTelegram instanceconfigtelegram) {
+        this.instanceconfigtelegram= instanceconfigtelegram;
     }
 
     public  void sendMessage(String number, String message) throws Exception { // added throws Exception
@@ -35,12 +33,12 @@ public class TelegramService {
                 .append("}")
                 .toString();
 
-        URL url = new URL(instanceconfig.getTG_GATEWAY_URL());
+        URL url = new URL(instanceconfigtelegram.getTG_GATEWAY_URL());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("X-WM-CLIENT-ID", instanceconfig.getCLIENT_ID()); // Correct access
-        conn.setRequestProperty("X-WM-CLIENT-SECRET", instanceconfig.getCLIENT_SECRET()); // Correct access
+        conn.setRequestProperty("X-WM-CLIENT-ID", instanceconfigtelegram.getCLIENT_ID()); // Correct access
+        conn.setRequestProperty("X-WM-CLIENT-SECRET", instanceconfigtelegram.getCLIENT_SECRET()); // Correct access
         conn.setRequestProperty("Content-Type", "application/json");
 
         OutputStream os = conn.getOutputStream();
