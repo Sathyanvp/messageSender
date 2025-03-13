@@ -44,37 +44,18 @@ public class Controller {
                     e.printStackTrace();
                     return ResponseEntity.internalServerError().body("Error sending message: " + e.getMessage());
                 }
-//            case "whatsapp":
-//                try {
-//                    whatsappservice.sendMessage(number, message);
-//                    return ResponseEntity.ok("WhatsApp message sent successfully.");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    return ResponseEntity.internalServerError().body("Error sending message: " + e.getMessage());
-//                }
-//            case "sms":
-//                try {
-//                    smsservice.sendMessage(number, message);
-//                    return ResponseEntity.ok("SMS message sent successfully.");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    return ResponseEntity.internalServerError().body("Error sending message: " + e.getMessage());
-//                }
-//            default:
-//                return ResponseEntity.badRequest().body("Invalid preferred channel.");
+//           
         }
     @PostMapping("/send/whatsapp")
     public ResponseEntity<String> sender(@RequestBody SMSRequest smsrequest) {
     	 String toPhoneNumber = smsrequest.getToPhoneNumber();
          String message = smsrequest.getMessage();
          String fromPhoneNumber  = smsrequest.getFromPhoneNumber();
-    	try {
-    		smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
-            return ResponseEntity.ok("SMS message sent successfully.");
-     } 
-        catch (Exception e) {
-            e.printStackTrace();
-           return ResponseEntity.internalServerError().body("Error sending message: " + e.getMessage());
-    }
+
+    	return	smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
+           
+    
+      
+    
     }
 }

@@ -1,26 +1,24 @@
 package messageusingtelegram.Usingtelegramapi.Configuration;
 
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-
 
 @Component
 public class InstanceConfigTelegram {
 
-	@Value("${telegram.instance.id}")
-	public String INSTANCE_ID;
+	
+	public String INSTANCE_ID="YOUR_INSTANCE_ID_HERE";
 
-	@Value("${telegram.client.id}")
-	public String CLIENT_ID;
+	
+	public String CLIENT_ID="YOUR_CLIENT_ID_HERE";
 
-	@Value("${telegram.client.secret}")
-	public String CLIENT_SECRET;
 
-	@Value("${TG.GATEWAY.URL}")
-	private String TG_GATEWAY_URL;
+	public String CLIENT_SECRET="YOUR_CLIENT_SECRET_HERE";
 
+
+	private String TG_GATEWAY_URL="http://api.whatsmate.net/v3/telegram/single/text/message/" + INSTANCE_ID;
+
+	
+	
 	public InstanceConfigTelegram() {
 	}
 

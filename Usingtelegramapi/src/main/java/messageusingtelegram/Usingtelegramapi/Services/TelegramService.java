@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import messageusingtelegram.Usingtelegramapi.Configuration.InstanceConfigTelegram;
 
@@ -20,8 +21,10 @@ public class TelegramService {
         this.instanceconfigtelegram= instanceconfigtelegram;
     }
 
-    public  void sendMessage(String number, String message) throws Exception { // added throws Exception
-
+    public  ResponseEntity<String> sendMessage(String number, String message) throws Exception { // added throws Exception
+       try {
+    	   
+       
         String jsonPayload = new StringBuilder()
                 .append("{")
                 .append("\"number\":\"")
@@ -37,8 +40,8 @@ public class TelegramService {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("X-WM-CLIENT-ID", instanceconfigtelegram.getCLIENT_ID()); // Correct access
-        conn.setRequestProperty("X-WM-CLIENT-SECRET", instanceconfigtelegram.getCLIENT_SECRET()); // Correct access
+        conn.setRequestProperty("X-WM-CLIENT-ID", instanceconfigtelegram.getCLIENT_ID()); 
+        conn.setRequestProperty("X-WM-CLIENT-SECRET", instanceconfigtelegram.getCLIENT_SECRET()); 
         conn.setRequestProperty("Content-Type", "application/json");
 
         OutputStream os = conn.getOutputStream();
@@ -47,15 +50,20 @@ public class TelegramService {
         os.close();
 
         int statusCode = conn.getResponseCode();
-        System.out.println("Response from WA Gateway: \n");
-        System.out.println("Status Code: " + statusCode);
+//        System.out.println("Response from WA Gateway: \n");
+//        System.out.println("Status Code: " + statusCode);
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (statusCode == 200) ? conn.getInputStream() : conn.getErrorStream()
         ));
         String output;
         while ((output = br.readLine()) != null) {
-            System.out.println(output);
+           System.out.println(output);
+        
         }
         conn.disconnect();
+        return ResponseEntity.ok("Message sent successfully theough telegram.");    }
+       catch(Exception e) {
+    	   return ResponseEntity.internalServerError().body("Error sending message: " + e.getMessage());
+       }
     }
 }

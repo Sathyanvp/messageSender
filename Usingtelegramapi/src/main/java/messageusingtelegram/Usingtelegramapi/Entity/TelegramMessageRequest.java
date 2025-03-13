@@ -1,10 +1,18 @@
 package messageusingtelegram.Usingtelegramapi.Entity;
 
+import org.springframework.stereotype.Component;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
+@Component
 public class TelegramMessageRequest {
+	@NotBlank(message = "Please enter recipent number")
+	@Pattern(regexp = "^\\+?\\d{1,14}$", message = "Invalid  phone number format")
     private String number;
+	@NotBlank(message = "Please enter message to be sent")
     private String message;
-    private String preferredChannel;
+
 
     public  TelegramMessageRequest () {}
     
@@ -12,13 +20,8 @@ public class TelegramMessageRequest {
         this.number = number;
     }
 
-
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public void setPreferredChannel(String preferredChannel) {
-        this.preferredChannel = preferredChannel;
     }
     
     public String getNumber() {
@@ -29,10 +32,7 @@ public class TelegramMessageRequest {
         return message;
     }
     
-    public String getPreferredChannel() {
-        return preferredChannel;
-    }
-    
+  
 
 }
 
