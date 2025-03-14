@@ -46,16 +46,22 @@ public class Controller {
                 }
 //           
         }
-    @PostMapping("/send/whatsapp")
+    @PostMapping("/send/sms")
     public ResponseEntity<String> sender(@RequestBody SMSRequest smsrequest) {
     	 String toPhoneNumber = smsrequest.getToPhoneNumber();
          String message = smsrequest.getMessage();
          String fromPhoneNumber  = smsrequest.getFromPhoneNumber();
 
-    	return	smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
+    	return	smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);}
            
     
-      
+    	@PostMapping("/send/whatsapp")
+        public ResponseEntity<String> sender(@RequestBody WhatsappMessageRequest smsrequest) {
+        	 String toPhoneNumber = smsrequest.getToPhoneNumber();
+             String message = smsrequest.getMessage();
+             String fromPhoneNumber  = smsrequest.getFromPhoneNumber();
+
+        	return	smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
     
     }
 }

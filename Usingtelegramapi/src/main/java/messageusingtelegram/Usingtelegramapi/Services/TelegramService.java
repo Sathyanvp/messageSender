@@ -9,16 +9,16 @@ import java.net.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import messageusingtelegram.Usingtelegramapi.Configuration.InstanceConfigTelegram;
+import messageusingtelegram.Usingtelegramapi.Configuration.TelegramConfig;
 
 @Service
 public class TelegramService {
 
-    private InstanceConfigTelegram instanceconfigtelegram;
+    private TelegramConfig telegramconfig;
 
     @Autowired
-    public TelegramService(InstanceConfigTelegram instanceconfigtelegram) {
-        this.instanceconfigtelegram= instanceconfigtelegram;
+    public TelegramService(TelegramConfig telegramconfig) {
+        this.telegramconfig= telegramconfig;
     }
 
     public  ResponseEntity<String> sendMessage(String number, String message) throws Exception { // added throws Exception
@@ -36,12 +36,12 @@ public class TelegramService {
                 .append("}")
                 .toString();
 
-        URL url = new URL(instanceconfigtelegram.getTG_GATEWAY_URL());
+        URL url = new URL(telegramconfig.getTG_GATEWAY_URL());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("X-WM-CLIENT-ID", instanceconfigtelegram.getCLIENT_ID()); 
-        conn.setRequestProperty("X-WM-CLIENT-SECRET", instanceconfigtelegram.getCLIENT_SECRET()); 
+        conn.setRequestProperty("X-WM-CLIENT-ID", telegramconfig.getCLIENT_ID()); 
+        conn.setRequestProperty("X-WM-CLIENT-SECRET", telegramconfig.getCLIENT_SECRET()); 
         conn.setRequestProperty("Content-Type", "application/json");
 
         OutputStream os = conn.getOutputStream();

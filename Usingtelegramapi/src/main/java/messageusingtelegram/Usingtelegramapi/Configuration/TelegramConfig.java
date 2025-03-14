@@ -3,7 +3,7 @@ package messageusingtelegram.Usingtelegramapi.Configuration;
 import org.springframework.stereotype.Component;
 
 @Component
-public class InstanceConfigTelegram {
+public class TelegramConfig{
 
 	
 	public String INSTANCE_ID="YOUR_INSTANCE_ID_HERE";
@@ -19,7 +19,7 @@ public class InstanceConfigTelegram {
 
 	
 	
-	public InstanceConfigTelegram() {
+	public TelegramConfig() {
 	}
 
 	public String getINSTANCE_ID() {
