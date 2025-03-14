@@ -5,14 +5,18 @@ import lombok.Data;
 @Data
 public class WhatsappConfig {
 	
-	private String authToken = "  ";
-
+	private String whatsappAuthToken = "  ";
+    private String whatsappAccountSid = "";
 	
 
 	
 	 
-	public String getAuthToken() {
-		return authToken;
+	public String getWhatsappAccountSid() {
+		return whatsappAccountSid;
+	}
+
+	public String getwhatsappAuthToken() {
+		return whatsappAuthToken;
 	}
 	 
 }

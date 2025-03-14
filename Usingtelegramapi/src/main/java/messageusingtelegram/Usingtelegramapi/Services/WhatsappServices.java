@@ -7,51 +7,47 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+
+import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+
 import messageusingtelegram.Usingtelegramapi.Configuration.WhatsappConfig;
 import messageusingtelegram.Usingtelegramapi.Entity.WhatsappMessageRequest;
-
+@Service
 public class WhatsappServices {
 	
     private WhatsappConfig whatsappconfig;
-    private WhatsappMessageRequest whatsappmessagerequest;
+   
     
     @Autowired
-    public WhatsappServices(WhatsappConfig whatsappconfig, WhatsappMessageRequest whatsappmessagerequest) {
+    public WhatsappServices(WhatsappConfig whatsappconfig) {
 		super();
 		this.whatsappconfig = whatsappconfig;
-		this.whatsappmessagerequest = whatsappmessagerequest;
+		
 	}
 
 	
 
 	public  ResponseEntity<String> sendMessage(String toPhoneNumber,String fromPhoneNumber, String whatsappMessage) {
 		
-        String authToken = whatsappconfig.getAuthToken();
-
+        String whatsappAuthToken = whatsappconfig.getwhatsappAuthToken();
+        String whatsappAccountSid = whatsappconfig.getWhatsappAccountSid();
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://graph.facebook.com/v13.0/"+fromPhoneNumber+"/messages"))
-                .header("Authorization", "Bearer "+authToken)
-                .header("Content-Type", "application/json")
-                // Getting started example
-                //.POST(HttpRequest.BodyPublishers.ofString("{ \"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \""+phoneNumber+"\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" } } }"))
-                // Text message example
-                .POST(HttpRequest.BodyPublishers.ofString("{ \"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \""+toPhoneNumber+"\", \"type\": \"text\", \"text\": { \"preview_url\": false, \"body\": "+whatsappMessage+ "} }"))
-                // Bespoke message template example
-//                .POST(HttpRequest.BodyPublishers.ofString("{ \"messaging_product\": \"whatsapp\", \"recipient_type\": \"individual\", \"to\": \""+toPhoneNumber+"\", \"type\": \"template\", \"template\": { \"name\": \"new_customer_offer\", \"language\": { \"code\": \"en\" }, \"components\":[{\"type\":\"header\",\"parameters\":[{\"type\":\"image\",\"image\":{\"link\":\"https://i.ibb.co/DRMHqRj/welcome.jpg\"}}]},{\"type\":\"body\",\"parameters\":[{\"type\":\"text\",\"text\":\"John Smith\"}]}] } }"))
-                .build();
-            HttpClient http = HttpClient.newHttpClient();
-            HttpResponse<String> response = http.send(request,BodyHandlers.ofString());
-            ResponseEntity<String> responseEntity = ResponseEntity
-                    .status(response.statusCode())
-                    .headers(httpHeaders -> response.headers().map().forEach(httpHeaders::addAll))
-                    .body(response.body());
-            return responseEntity;
+        	 Twilio.init(whatsappAccountSid , whatsappAuthToken);
+             Message message = Message.creator(
+                     new com.twilio.type.PhoneNumber(fromPhoneNumber),
+                     new com.twilio.type.PhoneNumber(toPhoneNumber),
+                     whatsappMessage)
+                 .create();
+            return ResponseEntity.ok("Whatsapp message sent successfully."+message.getSid());
             
-        } catch (URISyntaxException | IOException | InterruptedException e) {
+        } 
+        catch (Exception e) {
         	 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing request");
         }
 		
