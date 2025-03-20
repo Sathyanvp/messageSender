@@ -1,8 +1,8 @@
 package messageusingtelegram.Usingtelegramapi.Configuration;
 
-import lombok.Data;
+import org.springframework.stereotype.Component;
 
-@Data
+@Component
 public class ConfigSMS {
 	
 	

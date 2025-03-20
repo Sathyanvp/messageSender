@@ -1,9 +1,9 @@
 package messageusingtelegram.Usingtelegramapi.Entity;
 
 import org.springframework.stereotype.Component;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+
 
 @Component
 public class TelegramMessageRequest {

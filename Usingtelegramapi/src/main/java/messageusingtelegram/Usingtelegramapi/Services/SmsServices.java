@@ -1,13 +1,14 @@
 package messageusingtelegram.Usingtelegramapi.Services;
 
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.stereotype.Service;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
 import messageusingtelegram.Usingtelegramapi.Configuration.ConfigSMS;
 
+@Service
 public class SmsServices {
 
 	private ConfigSMS configsms;

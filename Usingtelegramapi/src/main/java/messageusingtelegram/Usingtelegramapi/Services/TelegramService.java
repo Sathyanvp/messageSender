@@ -18,6 +18,7 @@ public class TelegramService {
 
     @Autowired
     public TelegramService(TelegramConfig telegramconfig) {
+    	super();
         this.telegramconfig= telegramconfig;
     }
 

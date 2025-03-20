@@ -1,23 +1,15 @@
 package messageusingtelegram.Usingtelegramapi.Services;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
-
 import messageusingtelegram.Usingtelegramapi.Configuration.WhatsappConfig;
-import messageusingtelegram.Usingtelegramapi.Entity.WhatsappMessageRequest;
+
 @Service
 public class WhatsappServices {
 	

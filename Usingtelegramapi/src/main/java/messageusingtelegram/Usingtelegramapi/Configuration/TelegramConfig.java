@@ -2,6 +2,7 @@ package messageusingtelegram.Usingtelegramapi.Configuration;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class TelegramConfig{
 

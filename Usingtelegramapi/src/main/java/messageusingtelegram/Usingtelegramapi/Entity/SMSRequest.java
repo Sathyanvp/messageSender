@@ -1,10 +1,10 @@
 package messageusingtelegram.Usingtelegramapi.Entity;
 
+import org.springframework.stereotype.Component;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 
-@Data
+@Component
 public class SMSRequest {
 	
 	@NotBlank(message = "Please enter recipent number")

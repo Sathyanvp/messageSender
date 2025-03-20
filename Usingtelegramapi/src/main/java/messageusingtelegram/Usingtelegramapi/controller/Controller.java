@@ -16,7 +16,7 @@ import messageusingtelegram.Usingtelegramapi.Services.WhatsappServices;
 
 
 @RestController
-@RequestMapping("/messagesender")
+@RequestMapping("/campaign/messagesender")
 public class Controller {
 
     private final TelegramService telegramservice;
@@ -56,12 +56,12 @@ public class Controller {
            
     
     	@PostMapping("/send/whatsapp")
-        public ResponseEntity<String> sender(@RequestBody WhatsappMessageRequest smsrequest) {
-        	 String toPhoneNumber = smsrequest.getToPhoneNumber();
-             String message = smsrequest.getMessage();
-             String fromPhoneNumber  = smsrequest.getFromPhoneNumber();
+        public ResponseEntity<String> sender(@RequestBody WhatsappMessageRequest whatsapprequest) {
+        	 String toPhoneNumber = whatsapprequest.getToPhoneNumber();
+             String message = whatsapprequest.getMessage();
+             String fromPhoneNumber  = whatsapprequest.getFromPhoneNumber();
 
-        	return	smsservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
+        	return	whatsappservice.sendMessage(toPhoneNumber,fromPhoneNumber,message);
     
     }
 }
